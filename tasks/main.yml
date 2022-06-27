@@ -1,0 +1,26 @@
+---
+# tasks file for vector-role
+- name: Vector - Download repo
+  ansible.builtin.get_url:
+    url: https://repositories.timber.io/public/vector/cfg/setup/bash.rpm.sh
+    dest: /tmp/bash.rpm.sh
+    mode: '0755'
+  tags: vector
+
+- name: Vector - Install repo
+  become: true
+  ansible.builtin.command: "/tmp/bash.rpm.sh"
+  changed_when: false
+  tags: vector
+
+- name: Vector - Install package
+  become: true
+  ansible.builtin.yum:
+    name: vector
+    state: latest
+  notify: Start vector service
+  tags: vector
+
+- name: Vector - Flush handlers
+  ansible.builtin.meta: flush_handlers
+  tags: vector

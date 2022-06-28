@@ -11,7 +11,7 @@ An example of using role:
 ```yaml
 - hosts: all
   roles:
-      - vector-role
+    - vector
 ```
 
 License
